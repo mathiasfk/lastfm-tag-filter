@@ -2,17 +2,16 @@ import { useState } from 'react';
 import './App.css';
 
 const API_KEY = "31ba5b46e9e1e977ff751412f7088504";
-const LIMIT = 1000;
-const RATE_LIMIT_MS = 100;
+const LIMIT = 500;
+const RATE_LIMIT_MAX_DELAY_MS = 5000;
 const MIN_CONFIABILITY = 5;
 const TOP_TAGS_FILTER = 10;
 const TOP_TAGS_SHOW = 5;
 const TOP_ARTISTS_SHOW = 10;
 
 
-
 const getTags = async (mbid: string, name: string) => {
-  await new Promise(f => setTimeout(f, RATE_LIMIT_MS));
+  await new Promise(f => setTimeout(f, Math.random() * RATE_LIMIT_MAX_DELAY_MS));
 
   const url = `https://ws.audioscrobbler.com/2.0/?method=artist.getTopTags&artist=${encodeURIComponent(name).replace('%20','+')}&api_key=31ba5b46e9e1e977ff751412f7088504&format=json&limit=10`;
   const topTags = await fetch(url)
