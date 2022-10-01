@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/lastfm-tag-filter/static/css/main.f6324f48.css",
+    "main.js": "/lastfm-tag-filter/static/js/main.9b1c6e0f.js",
+    "index.html": "/lastfm-tag-filter/index.html",
+    "main.f6324f48.css.map": "/lastfm-tag-filter/static/css/main.f6324f48.css.map",
+    "main.9b1c6e0f.js.map": "/lastfm-tag-filter/static/js/main.9b1c6e0f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f6324f48.css",
+    "static/js/main.9b1c6e0f.js"
+  ]
+}
