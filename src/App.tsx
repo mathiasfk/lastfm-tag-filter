@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css';
+import Loader from './components/Loader';
 
 const API_KEY = "31ba5b46e9e1e977ff751412f7088504";
 const LIMIT = 500;
@@ -63,8 +64,10 @@ function App() {
   const [artists, setArtists] = useState<any[]>([]);
   const [topTags, setTopTags] = useState<any[]>([]);
   const [mode, setMode] = useState<'artists'|'tags'>('artists');
+  const [loading, setLoading] = useState(false);
 
   const search = async (searchedTag: string, user: string) => {
+    setLoading(true)
     const data = await fetch(`https://ws.audioscrobbler.com/2.0/?method=user.gettopartists&user=${user}&api_key=${API_KEY}&format=json&limit=${LIMIT}`)
     .then(res => {
       if(res.ok){
@@ -77,7 +80,7 @@ function App() {
         throw data;
       return data.topartists.artist
     })
-    .catch(error => console.error(error));
+    .catch(error => console.error(error))
   
     const artistsWithTags = await Promise.all(data.map(
       async (artist:any) => ({
@@ -96,6 +99,7 @@ function App() {
 
     setArtists(filteredByTag);
     setTopTags(sumPlaycountByTag(filteredByTag));
+    setLoading(false);
   }
 
   return (
@@ -106,57 +110,61 @@ function App() {
         <input id="user" type="text" value={user} onChange={e => setUser(e.target.value)}></input>
         <label htmlFor="tag">Tag:</label>
         <input id="tag" type="text" value={tag} onChange={e => setTag(e.target.value)}></input>
-        <button onClick={() => search(tag, user)}>Search</button>
+        <button onClick={() => search(tag, user)} disabled={loading}>Search</button>
         <button onClick={() => setMode(mode === 'artists' ? 'tags' : 'artists')}>Toggle view</button>
       </header>
       <div className="results">
         {
-        artists.length === 0 ? 
-        <h2>No results found</h2> :
-        mode === 'artists' ? 
-        <>
-          <h2>Artists</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Playcount</th>
-                <th>Top Tags</th>
-              </tr>
-            </thead>
-            <tbody>
-              {artists.map((artist: any) => (
-              <tr key={artist.name}>
-                <td>{artist.name}</td>
-                <td>{artist.playcount}</td>
-                <td>{artist.tags.slice(0,TOP_TAGS_SHOW).map((tag: { name: string; }) => tag.name).join(", ")}</td>
-              </tr>))}
-            </tbody>
-          </table>
-        </>
-        :
-        <>
-          <h2>Tags</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Tag</th>
-                <th>Weighted Playcount</th>
-                <th>Playcount</th>
-                <th>Artists</th>
-              </tr>
-            </thead>
-            <tbody>
-              {topTags.map((tag: any) => (
-              <tr key={tag.name}>
-                <td>{tag.name}</td>
-                <td>{tag.weightedPlaycount}</td>
-                <td>{tag.playcount}</td>
-                <td>{Array.from(tag.artists).slice(0,TOP_ARTISTS_SHOW).join(", ")}</td>
-              </tr>))}
-            </tbody>
-          </table>
-        </>
+          loading ? 
+          <Loader />
+          :
+          artists.length === 0 ? 
+          <h2>No results found</h2>
+          :
+          mode === 'artists' ? 
+          <>
+            <h2>Artists</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Playcount</th>
+                  <th>Top Tags</th>
+                </tr>
+              </thead>
+              <tbody>
+                {artists.map((artist: any) => (
+                <tr key={artist.name}>
+                  <td>{artist.name}</td>
+                  <td>{artist.playcount}</td>
+                  <td>{artist.tags.slice(0,TOP_TAGS_SHOW).map((tag: { name: string; }) => tag.name).join(", ")}</td>
+                </tr>))}
+              </tbody>
+            </table>
+          </>
+          :
+          <>
+            <h2>Tags</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Tag</th>
+                  <th>Weighted Playcount</th>
+                  <th>Playcount</th>
+                  <th>Artists</th>
+                </tr>
+              </thead>
+              <tbody>
+                {topTags.map((tag: any) => (
+                <tr key={tag.name}>
+                  <td>{tag.name}</td>
+                  <td>{tag.weightedPlaycount}</td>
+                  <td>{tag.playcount}</td>
+                  <td>{Array.from(tag.artists).slice(0,TOP_ARTISTS_SHOW).join(", ")}</td>
+                </tr>))}
+              </tbody>
+            </table>
+          </>
         }
       </div>
     </div>
