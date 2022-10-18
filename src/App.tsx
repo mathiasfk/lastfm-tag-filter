@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import Loader from './components/Loader';
+import Header from './components/Header';
 
 const API_KEY = "31ba5b46e9e1e977ff751412f7088504";
 const LIMIT = 500;
@@ -104,15 +105,15 @@ function App() {
 
   return (
     <div className="App">
-      <header className="search">
-        <h1>Last.fm Tag Filter</h1>
-        <label htmlFor="user">User:</label>
-        <input id="user" type="text" value={user} onChange={e => setUser(e.target.value)}></input>
-        <label htmlFor="tag">Tag:</label>
-        <input id="tag" type="text" value={tag} onChange={e => setTag(e.target.value)}></input>
-        <button onClick={() => search(tag, user)} disabled={loading}>Search</button>
-        <button onClick={() => setMode(mode === 'artists' ? 'tags' : 'artists')}>Toggle view</button>
-      </header>
+      <Header 
+        user={user}
+        setUser={setUser}
+        tag={tag}
+        setTag={setTag}
+        loading={loading}
+        search={() => search(tag, user)}
+        setMode={() => setMode(mode === 'artists' ? 'tags' : 'artists')} 
+      />
       <div className="results">
         {
           loading ? 
