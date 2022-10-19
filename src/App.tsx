@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './App.css';
 import Loader from './components/Loader';
 import Header from './components/Header';
+import Table from './components/Table';
 
 const API_KEY = "31ba5b46e9e1e977ff751412f7088504";
 const LIMIT = 500;
@@ -103,6 +104,23 @@ function App() {
     setLoading(false);
   }
 
+  const artistsTableData = artists.map(
+    (artist: any) => [
+      artist.name, 
+      artist.playcount, 
+      artist.tags.slice(0,TOP_TAGS_SHOW).map((tag: { name: string; }) => tag.name).join(", ")
+    ]
+  );
+
+  const tagsTableData = topTags.map(
+    (tag: any) => [
+      tag.name, 
+      tag.weightedPlaycount,
+      tag.playcount,
+      Array.from(tag.artists).slice(0,TOP_ARTISTS_SHOW).join(", ")
+    ]
+  );
+
   return (
     <div className="App">
       <Header 
@@ -125,46 +143,18 @@ function App() {
           mode === 'artists' ? 
           <>
             <h2>Artists</h2>
-            <table>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Playcount</th>
-                  <th>Top Tags</th>
-                </tr>
-              </thead>
-              <tbody>
-                {artists.map((artist: any) => (
-                <tr key={artist.name}>
-                  <td>{artist.name}</td>
-                  <td>{artist.playcount}</td>
-                  <td>{artist.tags.slice(0,TOP_TAGS_SHOW).map((tag: { name: string; }) => tag.name).join(", ")}</td>
-                </tr>))}
-              </tbody>
-            </table>
+            <Table
+              headers={['Name', 'Playcount', 'Top Tags']}
+              values={artistsTableData}
+            />
           </>
           :
           <>
             <h2>Tags</h2>
-            <table>
-              <thead>
-                <tr>
-                  <th>Tag</th>
-                  <th>Weighted Playcount</th>
-                  <th>Playcount</th>
-                  <th>Artists</th>
-                </tr>
-              </thead>
-              <tbody>
-                {topTags.map((tag: any) => (
-                <tr key={tag.name}>
-                  <td>{tag.name}</td>
-                  <td>{tag.weightedPlaycount}</td>
-                  <td>{tag.playcount}</td>
-                  <td>{Array.from(tag.artists).slice(0,TOP_ARTISTS_SHOW).join(", ")}</td>
-                </tr>))}
-              </tbody>
-            </table>
+            <Table
+              headers={['Tag', 'Weighted Playcount', 'Playcount', 'Artists']}
+              values={tagsTableData}
+            />
           </>
         }
       </div>
