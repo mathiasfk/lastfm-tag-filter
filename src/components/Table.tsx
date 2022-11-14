@@ -9,11 +9,11 @@ export default function Table({headers, values}: Props){
     return (
         <table>
             <thead>
-            <tr>{headers.map(h => <th>{h}</th>)}</tr>
+            <tr>{headers.map((h, thIndex) => <th key={thIndex}>{h}</th>)}</tr>
             </thead>
             <tbody>
             {
-                values.map(row => <tr>{row.map(v => <td>{v}</td>)}</tr>)
+                values.map((row, trIndex) => <tr key={trIndex}>{row.map((v, tdIndex) => <td key={tdIndex}>{v}</td>)}</tr>)
             }
             </tbody>
         </table>
