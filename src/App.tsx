@@ -12,6 +12,7 @@ const MIN_CONFIABILITY = 5;
 const TOP_TAGS_FILTER = 10;
 const TOP_TAGS_SHOW = 5;
 const TOP_ARTISTS_SHOW = 10;
+const BLACKLISTED_TAGS = ['seen live'];
 
 
 const getTags = async (mbid: string, name: string) => {
@@ -28,7 +29,7 @@ const getTags = async (mbid: string, name: string) => {
   .then(data => {
     if(!data.toptags || !data.toptags.tag)
       throw data;
-    return data.toptags.tag.slice(0, TOP_TAGS_FILTER)
+    return data.toptags.tag.filter((tag: any) => !BLACKLISTED_TAGS.includes(tag.name)).slice(0, TOP_TAGS_FILTER)
   })
   .catch(error => console.error(mbid, name, url, error))
 
