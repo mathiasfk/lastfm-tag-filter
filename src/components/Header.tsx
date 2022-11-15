@@ -29,9 +29,9 @@ export default function Header({
     <header className="search">
         <h1>Last.fm Tag Filter</h1>
         <label htmlFor="user">User:</label>
-        <input id="user" type="text" value={user} onChange={e => setUser(e.target.value)}></input>
+        <input id="user" type="search" value={user} onChange={e => setUser(e.target.value)}></input>
         <label htmlFor="tag">Tag:</label>
-        <input id="tag" type="text" value={tag} onChange={e => setTag(e.target.value)} onKeyUp={keyUphandler}></input>
+        <input id="tag" type="search" value={tag} onChange={e => setTag(e.target.value)} onKeyUp={keyUphandler}></input>
         <button onClick={search} disabled={loading}>Search</button>
         <button onClick={setMode}>Toggle view</button>
     </header>

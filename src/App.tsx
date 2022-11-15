@@ -3,6 +3,7 @@ import './App.css';
 import Loader from './components/Loader';
 import Header from './components/Header';
 import Table from './components/Table';
+import PlaycountBar from './components/PlaycountBar';
 
 const API_KEY = "31ba5b46e9e1e977ff751412f7088504";
 const LIMIT = 500;
@@ -104,10 +105,12 @@ function App() {
     setLoading(false);
   }
 
+  const maxPlaycount = artists.length ? Math.max(...artists.map(artist => artist.playcount)) : 0;
+
   const artistsTableData = artists.map(
     (artist: any) => [
       artist.name, 
-      artist.playcount, 
+      <PlaycountBar playcount={artist.playcount} maxPlaycount={maxPlaycount}></PlaycountBar>,
       artist.tags.slice(0,TOP_TAGS_SHOW).map((tag: { name: string; }) => tag.name).join(", ")
     ]
   );

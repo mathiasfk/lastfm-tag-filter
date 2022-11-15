@@ -1,0 +1,23 @@
+.chartlist-count-bar {
+    display: block;
+    width: 255px;
+    line-height: 32px;
+    position: relative;
+    text-align: left;
+}
+
+.chartlist-count-bar-slug {
+    background-color: #fbe9e9;
+    height: 100%;
+    min-width: 1px;
+    position: absolute;
+    top: 0;
+    z-index: -1;
+}
+
+.chartlist-count-bar-value {
+    display: block;
+    padding-right: 17px;
+    font-size: 14px;
+    padding-left: 10px;
+}

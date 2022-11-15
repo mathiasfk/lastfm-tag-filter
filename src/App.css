@@ -4,6 +4,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-family: Barlow,Open Sans,Lucida Grande,Helvetica Neue,Helvetica,Arial,Sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #222;
 }
 
 .search {

@@ -2,7 +2,7 @@ import React from "react"
 
 type Props = {
     headers: string[],
-    values: string[][],
+    values: any[][],
 }
 
 export default function Table({headers, values}: Props){
