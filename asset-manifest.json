@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/lastfm-tag-filter/static/css/main.06226773.css",
-    "main.js": "/lastfm-tag-filter/static/js/main.202a0ae5.js",
+    "main.js": "/lastfm-tag-filter/static/js/main.abbb3470.js",
     "index.html": "/lastfm-tag-filter/index.html",
     "main.06226773.css.map": "/lastfm-tag-filter/static/css/main.06226773.css.map",
-    "main.202a0ae5.js.map": "/lastfm-tag-filter/static/js/main.202a0ae5.js.map"
+    "main.abbb3470.js.map": "/lastfm-tag-filter/static/js/main.abbb3470.js.map"
   },
   "entrypoints": [
     "static/css/main.06226773.css",
-    "static/js/main.202a0ae5.js"
+    "static/js/main.abbb3470.js"
   ]
 }
