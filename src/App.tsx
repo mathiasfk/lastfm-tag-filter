@@ -106,12 +106,13 @@ function App() {
     setLoading(false);
   }
 
-  const maxPlaycount = artists.length ? Math.max(...artists.map(artist => artist.playcount)) : 0;
+  const maxArtitsPlaycount = artists.length ? Math.max(...artists.map(artist => artist.playcount)) : 0;
+  const maxTagPlaycount = topTags.length ? Math.max(...topTags.map(tag => tag.playcount)) : 0;
 
   const artistsTableData = artists.map(
     (artist: any) => [
       artist.name, 
-      <PlaycountBar playcount={artist.playcount} maxPlaycount={maxPlaycount}></PlaycountBar>,
+      <PlaycountBar playcount={artist.playcount} maxPlaycount={maxArtitsPlaycount}></PlaycountBar>,
       artist.tags.slice(0,TOP_TAGS_SHOW).map((tag: { name: string; }) => tag.name).join(", ")
     ]
   );
@@ -119,8 +120,7 @@ function App() {
   const tagsTableData = topTags.map(
     (tag: any) => [
       tag.name, 
-      tag.weightedPlaycount,
-      tag.playcount,
+      <PlaycountBar playcount={tag.playcount} maxPlaycount={maxTagPlaycount}></PlaycountBar>,
       Array.from(tag.artists).slice(0,TOP_ARTISTS_SHOW).join(", ")
     ]
   );
@@ -147,6 +147,7 @@ function App() {
           mode === 'artists' ? 
           <>
             <h2>Artists</h2>
+            <p><em>Ordered by playcount</em></p>
             <Table
               headers={['Name', 'Playcount', 'Top Tags']}
               values={artistsTableData}
@@ -155,8 +156,9 @@ function App() {
           :
           <>
             <h2>Tags</h2>
+            <p><em>Ordered by relevance</em></p>
             <Table
-              headers={['Tag', 'Weighted Playcount', 'Playcount', 'Artists']}
+              headers={['Tag', 'Playcount', 'Artists']}
               values={tagsTableData}
             />
           </>
